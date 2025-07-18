@@ -696,7 +696,7 @@ h2 {
   border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
-  transition: background 0.3s ease;
+  transition: background( 0.3s ease);
 }
 
 .footer-form button:hover {
@@ -795,4 +795,3 @@ h2 {
 .project-card .caption {
   text-transform: uppercase;
 }
-
