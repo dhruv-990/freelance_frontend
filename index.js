@@ -2,6 +2,13 @@
 
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Disable right-click on images in services and projects sections
+    document.querySelectorAll(
+      ".services-grid img, .project-grid img"
+    ).forEach(img => {
+      img.oncontextmenu = () => false;
+    });
+
     const scrollArrow = document.querySelector(".scroll-arrow");
     scrollArrow?.addEventListener("click", () => {
       window.scrollTo({

@@ -9,6 +9,7 @@ body {
   background: #fdfcfb;
   color: #2e2e2e;
   line-height: 1.6;
+  padding-top: 72px; /* Prevent content from being hidden behind fixed navbar */
 }
 
 /* Navbar */
@@ -19,8 +20,10 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  width: 100%;
   z-index: 1000;
   transition: background 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
@@ -241,9 +244,29 @@ h2 {
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
   perspective: 1000px;
+}
+
+.service-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  align-self: stretch;
+}
+
+.service-title {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #1e3a5f;
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+  text-align: center;
+  font-weight: 600;
 }
 
 /* Service Card Base */
@@ -252,7 +275,7 @@ h2 {
   border-radius: 12px;
   padding: 2rem;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  transition: box-shadow 0.4s cubic-bezier(.25,.8,.25,1), transform 0.4s cubic-bezier(.25,.8,.25,1);
   transform-style: preserve-3d;
   will-change: transform;
   background-size: cover;
@@ -260,12 +283,18 @@ h2 {
   background-repeat: no-repeat;
   color: transparent;
   overflow: hidden;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
 }
 
 /* Hover Effects */
 .service-card:hover {
-  transform: rotateY(8deg) scale(1.03);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+  /* Remove tilt and scale, add 3D lift effect */
+  transform: translateZ(20px);
+  box-shadow: 0 16px 32px rgba(0,0,0,0.18), 0 1.5px 6px rgba(0,0,0,0.10);
   color: #fff;
 }
 
@@ -295,16 +324,36 @@ h2 {
 }
 
 /* Text Reveal on Hover */
-.service-card h3,
+.service-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  position: relative;
+  z-index: 2;
+  opacity: 1;
+  transform: none;
+  transition: none;
+  background: rgba(30, 58, 95, 0.85);
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  display: inline-block;
+  margin-top: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .service-card li {
   position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
   z-index: 2;
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.5s ease;
 }
 
-.service-card:hover h3,
 .service-card:hover li {
   opacity: 1;
   transform: translateY(0);
@@ -331,28 +380,24 @@ h2 {
 }
 
 .service-card li::before {
-  content: "|";
-  position: absolute;
-  left: 0;
-  color: #fff;
-  font-weight: bold;
+  content: none;
 }
 
 /* Unique Backgrounds */
 .service-card.architecture {
-  background-image: url("images/ARCHITECTURE\ DESIGN.jpg");
+  background-image: url("images/Gemini_Generated_Image_jerv5sjerv5sjerv.png");
 }
 
 .service-card.interior {
-  background-image: url("images/INTERIOR\ DESIGN.jpg");
+  background-image: url("images/Gemini_Generated_Image_1754jj1754jj1754.png");
 }
 
 .service-card.landscape {
-  background-image: url("images/landscape.jpg");
+  background-image: url("images/LANDSCAPE\ DESIGN.png");
 }
 
 .service-card.renovation {
-  background-image: url("images/renovation.jpg");
+  background-image: url("images/RENOVATION.png");
 }
 
 .service-card.visualization {
@@ -360,19 +405,19 @@ h2 {
 }
 
 .service-card.green {
-  background-image: url("images/GREEN\ BUILDING\ DESIGN.jpg");
+  background-image: url("images/GREEN\ BUILDING\ DESIGN.png");
 }
 
 .service-card.management {
-  background-image: url("images/PROJECT\ MANAGEMENT\ &\ CONSTRUCTION.jpg");
+  background-image: url("images/Gemini_Generated_Image_60tww760tww760tw.png");
 }
 
 .service-card.estimation {
-  background-image: url("images/ESTIMATION\ &\ VALUATION.jpg");
+  background-image: url("images/Gemini_Generated_Image_1754jj1754jj1754\ \(1\).png");
 }
 
 .service-card.engineering {
-  background-image: url("images/STRUCTURE\ DESIGN\ &\ ENGINEERING\ SERVICES.jpg");
+  background-image: url("images/STRUCTURE\ DESIGN\ &\ ENGINEERING\ SERVICES.png");
 }
 /* About Section */
 .about {
@@ -491,9 +536,24 @@ h2 {
 
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   padding: 2rem;
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .services-grid,
+  .project-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .services-grid,
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .project-card {
@@ -725,3 +785,14 @@ h2 {
     flex-direction: column;
   }
 }
+
+.services h2,
+.service-title,
+.service-card li,
+.projects h2,
+.projects h3,
+.project-card p,
+.project-card .caption {
+  text-transform: uppercase;
+}
+
